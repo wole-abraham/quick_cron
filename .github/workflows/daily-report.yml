@@ -1,0 +1,29 @@
+name: Daily Report Sender
+
+on:
+  schedule:
+    - cron: "0 7 * * *"   # Runs every day at 07:00 UTC (adjust as needed)
+  workflow_dispatch:       # lets you run it manually
+
+jobs:
+  send-report:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install deps
+        run: pip install supabase python-dotenv requests
+
+      - name: Run script
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+        run: python cron.py
