@@ -27,14 +27,14 @@ def fetch_today():
     return res.data or []
 
 
-def build_html(rows):
+def bridge_html(rows):
     if not rows:
         return "<h2>No survey records for today.</h2>"
 
     html = """
     <html>
     <body>
-    <p>Dear All, Kindly check the activities for the brodges daily construction summarized as the tabel below</p>
+    <p>Dear All, Kindly check the activities for the bridges daily construction summarized as the tabel below</p>
     <table border="1" cellpadding="6" cellspacing="0" style="border-collapse: collapse;">
         <tr style="background-color:#333;color:white;">
             <th>date_of_activity</th>
@@ -90,9 +90,7 @@ def send_webhook(html):
 def main():
     rows = fetch_today()
     
-    html = build_html(rows)
-    with open("index.html", mode="w") as file:
-        file.write(html)
+    html = bridge_html(rows)
     r = send_webhook(html)
     print("Webhook:", r.status_code, r.text)
 
