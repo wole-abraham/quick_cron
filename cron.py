@@ -80,6 +80,7 @@ def bridge_html(rows):
 
 
 def send_webhook(html):
+    
     return requests.post(
         "https://hook.eu2.make.com/svxxuei9ivon08wka4dwjih5l2tfrkcy",
         data=html,
