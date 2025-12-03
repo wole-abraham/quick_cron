@@ -1,7 +1,9 @@
 from supabase import create_client
 import requests
 import os
-from datetime import date
+from datetime import date, timedelta
+
+    
 
 url = os.environ["SUPABASE_URL"]
 key = os.environ["SUPABASE_KEY"]
@@ -11,7 +13,7 @@ supabase = create_client(url, key)
 
 
 def fetch_today():
-    today_str = date.today().isoformat()
+    today_str = (date.today() - timedelta(days=1)).isoformat()
     res = (
         supabase
         .table("survey")
@@ -25,7 +27,7 @@ def fetch_today():
 
     return res.data or []
 def fetch_today2():
-    today_str = date.today().isoformat()
+    today_str = (date.today() - timedelta(days=1)).isoformat()
 
     res = (
         supabase
